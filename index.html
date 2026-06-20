@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chúc Mừng Sinh Nhật! 🎉</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="card-container">
+        <div id="card-closed" class="screen">
+            <p id="instruction">Chạm vào ngọn nến để thổi nhé!</p>
+            
+            <div id="candle-flame-container">
+                <svg id="flame" class="flicker" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 32">
+                  <path d="M12 2C8.7 6.1 7 10.4 7 14.8c0 5 4 9 9 9 4.3 0 7.7-3 8.7-6.9C24.3 14.4 22 12 12 2z" fill="#ff9933" />
+                </svg>
+                
+                <svg id="smoke" class="hidden vanishing" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" fill="#ccc" opacity="0.8" />
+                </svg>
+            </div>
+        </div>
+
+        <div id="card-open" class="screen hidden">
+            <div id="open-content">
+                <h1>CHÚC MỪNG SINH NHẬT! 🥳</h1>
+                <p>Mừng ngày sinh nhật của bạn! Mong bạn luôn vui vẻ, hạnh phúc và gặt hái được nhiều thành công.</p>
+                
+                <div class="photo-gallery">
+                    <img src="assets/images/photo1.jpg" alt="Ảnh 1">
+                    <img src="assets/images/photo2.jpg" alt="Ảnh 2">
+                </div>
+            </div>
+            <button id="restart-btn">Trở lại</button>
+        </div>
+
+        <canvas id="confetti-canvas"></canvas>
+
+        <audio id="birthday-song" src="assets/audio/happy_birthday.mp3" preload="auto"></audio>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
