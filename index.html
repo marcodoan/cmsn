@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp Chúc Mừng Sinh Nhật</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        /* Cài đặt chung cho trang web */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #1a1a2e; /* Nền tối lúc chưa thổi nến */
+            transition: background-color 1.5s ease;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Nền sáng sau khi đã thổi nến */
+        body.blown-out {
+            background-color: #ffe8d6;
+        }
+
+        /* --- Màn hình 1: Bánh và Nến --- */
+        #scene-1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+
+        .instruction {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            animation: pulse 1.5s infinite;
+            text-align: center;
+        }
+
+        /* Vẽ bánh kem đơn giản bằng CSS */
+        .cake {
+            width: 200px;
+            height: 80px;
+            background-color: #ff9a9e;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            border-bottom: 10px solid #e27d80;
+        }
+
+        /* Vẽ Nến */
+        .candle {
+            width: 20px;
+            height: 60px;
+            background: linear-gradient(#fff, #f4e2d8);
+            position: absolute;
+            top: -60px;
+            left: 90px;
+            border-radius: 3px;
+        }
+
+        /* Vẽ Ngọn lửa */
+        .flame {
+            width: 20px;
+            height: 30px;
+            background: #ff9d00;
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -35px;
+            left: 0px;
+            cursor: pointer;
+            box-shadow: 0 0 20px #ff9d00, 0 0 40px #ff9d00;
+            animation: flicker 0.1s infinite alternate;
+            transition: opacity 0.4s ease;
+        }
+
+        /* --- Màn hình 2: Thiệp --- */
+        #scene-2 {
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.5) translateY(50px);
+            transition: all 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            text-align: center;
+            pointer-events: none; /* Không nhận tương tác khi đang ẩn */
+        }
+
+        /* Trạng thái hiện thiệp sau khi thổi nến */
+        body.blown-out #scene-2 {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            max-width: 320px;
+            margin: 0 20px;
+        }
+
+        .card h1 {
+            color: #e63946;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: #444;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        /* --- Hiệu ứng Animation --- */
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; text-shadow: 0 0 10px #fff; }
+            100% { opacity: 0.7; }
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* Ẩn màn hình 1 khi đã thổi nến */
+        body.blown-out #scene-1 {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="scene-1">
+        <div class="instruction">Chạm vào ngọn lửa để thổi nến nhé! ✨</div>
+        <div class="cake">
+            <div class="candle">
+                <div class="flame" id="flame" onclick="blowOutCandle()" ontouchstart="blowOutCandle()"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="scene-2">
+        <div class="card">
+            <h1>🎉 Happy Birthday! 🎂</h1>
+            <p>Chúc bạn một tuổi mới ngập tràn niềm vui, sức khỏe và luôn mỉm cười rạng rỡ nhé! Mọi điều tốt đẹp nhất sẽ đến với bạn trong hôm nay và cả những ngày sau.</p>
+            <p>💖💖💖</p>
+        </div>
+    </div>
+
+    <script>
+        function blowOutCandle() {
+            // 1. Làm mờ và tắt lửa
+            document.getElementById('flame').style.opacity = '0';
+            
+            // 2. Chờ một chút rồi chuyển cảnh (đổi màu nền, hiện thiệp)
+            setTimeout(() => {
+                document.body.classList.add('blown-out');
+                
+                // 3. Bắn pháo giấy
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 150,
+                        spread: 80,
+                        origin: { y: 0.6 },
+                        colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff']
+                    });
+                }, 800); // Bắn pháo giấy sau khi thiệp nổi lên
+            }, 500); // Trễ 0.5 giây tạo cảm giác nến vừa tắt bóng tối bao trùm rồi mới sáng lên
+        }
+    </script>
+</body>
+</html>
